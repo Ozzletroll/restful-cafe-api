@@ -80,8 +80,6 @@ def search():
     if request.method == "GET":
         search_params = request.args.get("location").title()
         cafe_search = db.session.query(Cafe).filter_by(location=search_params).all()
-        for cafe in cafe_search:
-            print(cafe.convert_to_dict())
         if len(cafe_search) > 0:
             return jsonify(search_results=[cafe.convert_to_dict() for cafe in cafe_search])
         else:
