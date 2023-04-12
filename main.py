@@ -124,6 +124,22 @@ def update_price(cafe_id):
 
     return jsonify(response={"success": "Successfully updated cafe price."}), 400
 
+
+@app.route("/report-closed/<cafe_id>", methods=["DELETE"])
+def delete_cafe(cafe_id):
+    api_key_test = request.args.get("api_key")
+
+    if api_key_test == "TopSecretAPIKey":
+        cafe_to_delete = db.session.get(Cafe, cafe_id)
+        if cafe_to_delete:
+            db.session.delete(cafe_to_delete)
+            db.session.commit()
+            return jsonify(response={"success": "Successfully deleted cafe from database."}), 400
+        else:
+            return jsonify(response={"failure": "No cafe matching that id found."}), 200
+    else:
+        return jsonify(response={"failure": "Forbidden. Check authorisation."}), 403
+
 ## HTTP GET - Read Record
 
 ## HTTP POST - Create Record
