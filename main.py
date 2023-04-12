@@ -88,6 +88,28 @@ def search():
 
     pass
 
+
+@app.route("/add", methods=["GET", "POST"])
+def add_cafe():
+    if request.method == "POST":
+
+        cafe_to_add = Cafe(name=request.args.get("name"),
+                           map_url=request.args.get("map_url"),
+                           img_url=request.args.get("img_url"),
+                           location=request.args.get("location"),
+                           seats=request.args.get("seats"),
+                           has_toilet=request.args.get("has_toilet"),
+                           has_sockets=request.args.get("sockets"),
+                           can_take_calls=request.args.get("can_take_calls"),
+                           coffee_price=request.args.get("coffee_price"),
+                           )
+
+        # db.session.add(cafe_to_add)
+        # db.session.commit()
+        return jsonify(response={"success": "Successfully added cafe to database."})
+
+    pass
+
 ## HTTP GET - Read Record
 
 ## HTTP POST - Create Record
