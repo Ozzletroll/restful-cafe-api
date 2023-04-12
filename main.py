@@ -110,6 +110,20 @@ def add_cafe():
 
     pass
 
+
+@app.route("/update-price/<cafe_id>", methods=["PATCH"])
+def update_price(cafe_id):
+    new_coffee_price = request.args.get("new_price")
+
+    cafe_to_update = db.session.get(Cafe, cafe_id)
+    if cafe_to_update:
+        cafe_to_update.coffee_price = new_coffee_price
+        db.session.commit()
+    else:
+        return jsonify(response={"failure": "No cafe matching that id found."})
+
+    return jsonify(response={"success": "Successfully updated cafe price."})
+
 ## HTTP GET - Read Record
 
 ## HTTP POST - Create Record
