@@ -120,9 +120,9 @@ def update_price(cafe_id):
         cafe_to_update.coffee_price = new_coffee_price
         db.session.commit()
     else:
-        return jsonify(response={"failure": "No cafe matching that id found."})
+        return jsonify(response={"failure": "No cafe matching that id found."}), 200
 
-    return jsonify(response={"success": "Successfully updated cafe price."})
+    return jsonify(response={"success": "Successfully updated cafe price."}), 400
 
 ## HTTP GET - Read Record
 
