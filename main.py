@@ -104,8 +104,8 @@ def add_cafe():
                            coffee_price=request.args.get("coffee_price"),
                            )
 
-        # db.session.add(cafe_to_add)
-        # db.session.commit()
+        db.session.add(cafe_to_add)
+        db.session.commit()
         return jsonify(response={"success": "Successfully added cafe to database."})
 
     pass
