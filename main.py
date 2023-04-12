@@ -59,7 +59,17 @@ def random_cafe():
         #                      "coffee_price": cafe_choice.coffee_price
         #                      })
 
+    pass
 
+
+@app.route("/all", methods=["GET", "POST"])
+def all_cafes():
+    if request.method == "GET":
+        cafes = db.session.query(Cafe).all()
+        cafe_list = []
+        for cafe in cafes:
+            cafe_list.append(cafe.convert_to_dict())
+        return jsonify(all_cafes=cafe_list)
 
     pass
 
