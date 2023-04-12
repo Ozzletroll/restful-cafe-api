@@ -26,6 +26,10 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    # Convert Cafe object into dictionary, ready to be jsonified.
+    def convert_to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 @app.route("/")
 def home():
@@ -39,17 +43,23 @@ def random_cafe():
         cafes = db.session.query(Cafe).all()
         cafe_choice = random.choice(cafes)
 
-        return jsonify(cafe={"name": cafe_choice.name,
-                             "map_url": cafe_choice.map_url,
-                             "img_url": cafe_choice.img_url,
-                             "location": cafe_choice.location,
-                             "has_sockets": cafe_choice.has_sockets,
-                             "has_toilets": cafe_choice.has_toilet,
-                             "has_wifi": cafe_choice.has_wifi,
-                             "can_take_calls": cafe_choice.can_take_calls,
-                             "seats": cafe_choice.seats,
-                             "coffee_price": cafe_choice.coffee_price
-                             })
+        return jsonify(cafe=cafe_choice.convert_to_dict())
+
+        # This code is only if we need to have absolute control over the json response.
+
+        # return jsonify(cafe={"name": cafe_choice.name,
+        #                      "map_url": cafe_choice.map_url,
+        #                      "img_url": cafe_choice.img_url,
+        #                      "location": cafe_choice.location,
+        #                      "has_sockets": cafe_choice.has_sockets,
+        #                      "has_toilets": cafe_choice.has_toilet,
+        #                      "has_wifi": cafe_choice.has_wifi,
+        #                      "can_take_calls": cafe_choice.can_take_calls,
+        #                      "seats": cafe_choice.seats,
+        #                      "coffee_price": cafe_choice.coffee_price
+        #                      })
+
+
 
     pass
 
