@@ -74,6 +74,7 @@ def all_cafes():
     pass
 
 
+# This route searches the database for all cafes that match the given location parameters.
 @app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == "GET":
